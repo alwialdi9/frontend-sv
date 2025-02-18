@@ -28,7 +28,7 @@ const App = () => {
     <Box 
       display="flex" 
       flexDirection="column" 
-      alignItems="start" 
+      // alignItems="start" 
       minHeight="100vh" 
       padding={2}
     >

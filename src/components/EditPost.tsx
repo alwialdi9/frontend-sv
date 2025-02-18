@@ -12,25 +12,40 @@ const EditPost = () => {
 
   useEffect(() => {
     // Fetch the post data by ID (this is simulated with a static data for now)
-    const fetchData = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.get(`http://127.0.0.1:3000/api/article/${id}`);
-            console.log(response.data);
-            setPost(response.data.data);
-        } catch (error) {
-            console.error("Error fetching posts:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
     fetchData();
   }, [id]);
+
+  const fetchData = async () => {
+    try {
+        setLoading(true);
+        const response = await axios.get(`http://127.0.0.1:3000/api/article/${id}`);
+        console.log(response.data);
+        setPost(response.data.data);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    } finally {
+        setLoading(false);
+    }
+}
+
+const editData = async () => {
+    try {
+        setLoading(true);
+        const response = await axios.post(`http://127.0.0.1:3000/api/article/${id}`, post);
+        console.log(response);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+    } finally {
+        setLoading(false);
+    }
+}
 
   const handleSave = (status: string) => {
     // Update post with new status
     console.log({ ...post, status });
-    navigate("/all-posts"); // Navigate back to all posts
+    setPost({ ...post, status });
+    editData();
+    navigate("/all-posts", { state: { successMessage: "Post updated successfully!" } }); // Navigate back to all posts
   };
 
   return (
@@ -59,7 +74,7 @@ const EditPost = () => {
         margin="normal"
       />
 
-      <Button variant="contained" onClick={() => handleSave("publish")} color="primary">
+      <Button variant="contained" onClick={() => handleSave("publish")} color="primary" style={{ marginRight: 10 }}>
         Publish
       </Button>
       <Button variant="outlined" onClick={() => handleSave("draft")} color="secondary">

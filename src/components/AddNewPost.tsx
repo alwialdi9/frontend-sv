@@ -19,7 +19,7 @@ const AddNewPost = () => {
     } finally {
         setLoading(false);
     }
-    navigate("/all-posts"); // Navigate back to all posts
+    navigate("/all-posts", { state: { successMessage: "Post Created successfully!" } }); // Navigate back to all posts
   };
 
   return (
@@ -48,7 +48,7 @@ const AddNewPost = () => {
         margin="normal"
       />
 
-      <Button variant="contained" onClick={() => handleSave("publish")} color="primary">
+      <Button variant="contained" onClick={() => handleSave("publish")} color="primary" style={{ marginRight: 10 }}>
         Publish
       </Button>
       <Button variant="outlined" onClick={() => handleSave("draft")} color="secondary">
